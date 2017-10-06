@@ -62,7 +62,7 @@ public class eBooksStoreAdminUserRolesServlet extends HttpServlet {
                     connection = DriverManager.getConnection(url, user, password); 
                     // test if role field is empty & realize the insert
                     if(!("".equals(role))){
-                        String DML = "INSERT INTO EBOOKSSTORE_USER_ROLES VALUES (?)";
+                        String DML = "INSERT INTO EBOOKS.ROLES VALUES (?)";
                         pstmnt = connection.prepareStatement(DML);
                         pstmnt.setString(1, role);
                         pstmnt.execute();
@@ -83,7 +83,7 @@ public class eBooksStoreAdminUserRolesServlet extends HttpServlet {
                         {
                             resultSet.close();
                         }
-                        catch (Exception ex){Logger.getLogger(eBooksStoreAdminUserRolesServlet.class.getName()).log(Level.SEVERE, null, ex);}
+                        catch (SQLException ex){Logger.getLogger(eBooksStoreAdminUserRolesServlet.class.getName()).log(Level.SEVERE, null, ex);}
                     }
                     if (statement != null)
                     {
@@ -91,7 +91,7 @@ public class eBooksStoreAdminUserRolesServlet extends HttpServlet {
                         {
                             statement.close();
                         }
-                        catch (Exception ex){Logger.getLogger(eBooksStoreAdminUserRolesServlet.class.getName()).log(Level.SEVERE, null, ex);}
+                        catch (SQLException ex){Logger.getLogger(eBooksStoreAdminUserRolesServlet.class.getName()).log(Level.SEVERE, null, ex);}
                     }
                     if (pstmnt != null)
                     {
@@ -99,7 +99,7 @@ public class eBooksStoreAdminUserRolesServlet extends HttpServlet {
                         {
                             pstmnt.close();
                         }
-                        catch (Exception ex){Logger.getLogger(eBooksStoreAdminUserRolesServlet.class.getName()).log(Level.SEVERE, null, ex);}
+                        catch (SQLException ex){Logger.getLogger(eBooksStoreAdminUserRolesServlet.class.getName()).log(Level.SEVERE, null, ex);}
                     }
                     if (connection != null)
                     {
@@ -107,7 +107,7 @@ public class eBooksStoreAdminUserRolesServlet extends HttpServlet {
                         {
                             connection.close();
                         }
-                        catch (Exception ex){Logger.getLogger(eBooksStoreAdminUserRolesServlet.class.getName()).log(Level.SEVERE, null, ex);}
+                        catch (SQLException ex){Logger.getLogger(eBooksStoreAdminUserRolesServlet.class.getName()).log(Level.SEVERE, null, ex);}
                     }
                     // redirect page to its JSP as view
                     request.getRequestDispatcher("./eBooksStoreAdminUserRolesPage.jsp").forward(request, response);
@@ -131,7 +131,7 @@ public class eBooksStoreAdminUserRolesServlet extends HttpServlet {
                         connection.setAutoCommit(false);
                         for(String s : selectedCheckboxes){
                             // realize update of all selected rows
-                            String DML = "UPDATE EBOOKSSTORE_USER_ROLES SET role=? WHERE role=?";
+                            String DML = "UPDATE EBOOKS.ROLES SET role=? WHERE role=?";
                             pstmnt = connection.prepareStatement(DML);
                             pstmnt.setString(1, newrole);
                             pstmnt.setString(2, s);
@@ -160,7 +160,7 @@ public class eBooksStoreAdminUserRolesServlet extends HttpServlet {
                         {
                             resultSet.close();
                         }
-                        catch (Exception ex){
+                        catch (SQLException ex){
                             Logger.getLogger(eBooksStoreAdminUserRolesServlet.class.getName()).log(Level.SEVERE, null, ex);
                         }
                     }
@@ -170,7 +170,7 @@ public class eBooksStoreAdminUserRolesServlet extends HttpServlet {
                         {
                             pstmnt.close();
                         }
-                        catch (Exception ex){
+                        catch (SQLException ex){
                             Logger.getLogger(eBooksStoreAdminUserRolesServlet.class.getName()).log(Level.SEVERE, null, ex);
                         }
                     }
@@ -180,7 +180,7 @@ public class eBooksStoreAdminUserRolesServlet extends HttpServlet {
                         {
                             pstmnt.close();
                         }
-                        catch (Exception ex){
+                        catch (SQLException ex){
                             Logger.getLogger(eBooksStoreAdminUserRolesServlet.class.getName()).log(Level.SEVERE, null, ex);
                         }
                     }
@@ -189,7 +189,7 @@ public class eBooksStoreAdminUserRolesServlet extends HttpServlet {
                         {
                             connection.setAutoCommit(true);
                         }
-                        catch (Exception ex){                          
+                        catch (SQLException ex){                          
                             Logger.getLogger(eBooksStoreAdminUserRolesServlet.class.getName()).log(Level.SEVERE, null, ex);
                         }
                         finally{
@@ -220,7 +220,7 @@ public class eBooksStoreAdminUserRolesServlet extends HttpServlet {
                     connection.setAutoCommit(false);
                     for(String s : selectedCheckboxes){
                         // realize delete of all selected rows
-                        String DML = "DELETE FROM EBOOKSSTORE_USER_ROLES WHERE ROLE=?";
+                        String DML = "DELETE FROM EBOOKS.ROLES WHERE ROLE=?";
                         pstmnt = connection.prepareStatement(DML);
                         pstmnt.setString(1, s);
                         pstmnt.execute();
@@ -247,7 +247,7 @@ public class eBooksStoreAdminUserRolesServlet extends HttpServlet {
                         {
                             resultSet.close();
                         }
-                        catch (Exception ex){
+                        catch (SQLException ex){
                             Logger.getLogger(eBooksStoreAdminUserRolesServlet.class.getName()).log(Level.SEVERE, null, ex);
                         }
                     }
@@ -257,7 +257,7 @@ public class eBooksStoreAdminUserRolesServlet extends HttpServlet {
                         {
                             pstmnt.close();
                         }
-                        catch (Exception ex){
+                        catch (SQLException ex){
                             Logger.getLogger(eBooksStoreAdminUserRolesServlet.class.getName()).log(Level.SEVERE, null, ex);
                         }
                     }
@@ -267,7 +267,7 @@ public class eBooksStoreAdminUserRolesServlet extends HttpServlet {
                         {
                             pstmnt.close();
                         }
-                        catch (Exception ex){
+                        catch (SQLException ex){
                             Logger.getLogger(eBooksStoreAdminUserRolesServlet.class.getName()).log(Level.SEVERE, null, ex);
                         }
                     }
@@ -276,7 +276,7 @@ public class eBooksStoreAdminUserRolesServlet extends HttpServlet {
                         {
                             connection.setAutoCommit(true);
                         }
-                        catch (Exception ex){                          
+                        catch (SQLException ex){                          
                             Logger.getLogger(eBooksStoreAdminUserRolesServlet.class.getName()).log(Level.SEVERE, null, ex);
                         }
                         finally{

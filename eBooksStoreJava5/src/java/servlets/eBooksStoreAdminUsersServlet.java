@@ -47,15 +47,12 @@ public class eBooksStoreAdminUsersServlet extends HttpServlet {
             if (request.getParameter("admin_users_insert") != null) { // insert values from fields
                 // set connection paramters to the DB
                 // read values from page fields
+                String ssn = request.getParameter("admin_users_ssn");
                 String username = request.getParameter("admin_users_username");
                 String user_password = request.getParameter("admin_users_password");
                 String role = request.getParameter("admin_user_role");
                 String customer = request.getParameter("admin_user_customer");
-                //String transporter = request.getParameter("admin_user_transporter");
-                int customerID=-1;
-                //int transporterID = -1;
-                int ID = -1;
-                // declare specific variables
+                // declare specific DBMS operationsvariables
                 ResultSet resultSet = null;
                 Statement statement = null;
                 Connection connection = null;
@@ -65,36 +62,13 @@ public class eBooksStoreAdminUsersServlet extends HttpServlet {
                     //check driver and create connection
                     Class driverClass = Class.forName(driver);
                     connection = DriverManager.getConnection(url, user, password);
-                    // User ID should be generated incremental based on last value of ID
-                    statement = connection.createStatement();
-                    String query = "SELECT MAX(ID) AS MAXID FROM EBOOKSSTORE_USERS";
-                    resultSet = statement.executeQuery(query);
-                    boolean resultSetHasRows = resultSet.next();
-                    boolean noOperation = false;
-                    if (resultSetHasRows)
-                    {
-                        // create new ID as MAXID + 1
-                        int maxid = resultSet.getInt(1);
-                        ID = maxid+1;
-                        
-                    }
-                    else
-                    {
-                        ID = 1;
-                    }
-                    // if nothing bad happen until now
-                    if(!noOperation){
-                        // realize the insert
-                        //call stored procedure to insert a new person
-                        String DML = "INSERT INTO EBOOKSSTORE_USERS VALUES (?, ?, ?, ?)";
-                        pstmnt = connection.prepareStatement(DML);
-                        pstmnt.setInt(1, ID);
-                        pstmnt.setString(2, username);
-                        pstmnt.setString(3, user_password);
-                        pstmnt.setString(4, role);
-                        pstmnt.execute();
-                        // display a message for ok
-                    }
+                    String DML = "INSERT INTO EBOOKS.USERS VALUES (?, ?, ?, ?)";
+                    pstmnt = connection.prepareStatement(DML);
+                    pstmnt.setString(1, ssn);
+                    pstmnt.setString(2, username);
+                    pstmnt.setString(3, user_password);
+                    pstmnt.setString(4, role);
+                    pstmnt.execute();
                 }
                 catch (ClassNotFoundException | SQLException ex)
                 {
@@ -109,7 +83,7 @@ public class eBooksStoreAdminUsersServlet extends HttpServlet {
                         {
                             resultSet.close();
                         }
-                        catch (Exception ex){Logger.getLogger(eBooksStoreAdminUsersServlet.class.getName()).log(Level.SEVERE, null, ex);}
+                        catch (SQLException ex){Logger.getLogger(eBooksStoreAdminUsersServlet.class.getName()).log(Level.SEVERE, null, ex);}
                     }
                     if (statement != null)
                     {
@@ -117,7 +91,7 @@ public class eBooksStoreAdminUsersServlet extends HttpServlet {
                         {
                             statement.close();
                         }
-                        catch (Exception ex){Logger.getLogger(eBooksStoreAdminUsersServlet.class.getName()).log(Level.SEVERE, null, ex);}
+                        catch (SQLException ex){Logger.getLogger(eBooksStoreAdminUsersServlet.class.getName()).log(Level.SEVERE, null, ex);}
                     }
                     if (pstmnt != null)
                     {
@@ -125,7 +99,7 @@ public class eBooksStoreAdminUsersServlet extends HttpServlet {
                         {
                             pstmnt.close();
                         }
-                        catch (Exception ex){Logger.getLogger(eBooksStoreAdminUsersServlet.class.getName()).log(Level.SEVERE, null, ex);}
+                        catch (SQLException ex){Logger.getLogger(eBooksStoreAdminUsersServlet.class.getName()).log(Level.SEVERE, null, ex);}
                     }
                     if (connection != null)
                     {
@@ -133,7 +107,7 @@ public class eBooksStoreAdminUsersServlet extends HttpServlet {
                         {
                             connection.close();
                         }
-                        catch (Exception ex){Logger.getLogger(eBooksStoreAdminUsersServlet.class.getName()).log(Level.SEVERE, null, ex);}
+                        catch (SQLException ex){Logger.getLogger(eBooksStoreAdminUsersServlet.class.getName()).log(Level.SEVERE, null, ex);}
                     }
                     // redirect page to its JSP as view
                     request.getRequestDispatcher("./eBooksStoreAdminUsersPage.jsp").forward(request, response);
@@ -155,50 +129,45 @@ public class eBooksStoreAdminUsersServlet extends HttpServlet {
                     String username = request.getParameter("admin_users_username");
                     String user_password = request.getParameter("admin_users_password");
                     String role = request.getParameter("admin_user_role");
-                    int customerID=-1;
-                    boolean noOperation = false;
-                    // if nothing bad happen move forward
-                    if(!noOperation){
-                        // if both username and password are "" do nothing
-                        if(!(("".equals(username)) && ("".equals(user_password)))){
-                            // operate updates for all selected rows
-                            for(String s : selectedCheckboxes){
-                                // realize update of all selected rows
-                                int ID = Integer.parseInt(s);
-                                if("".equals(username)){ // only password/s should be updated
-                                    String DML = "UPDATE EBOOKSSTORE_USERS SET password=?,role=? WHERE ID=?";
-                                    pstmnt = connection.prepareStatement(DML);
-                                    pstmnt.setString(1, user_password);
-                                    pstmnt.setString(2, role);
-                                    pstmnt.setInt(3, ID);
-                                }
-                                else if("".equals(user_password)){// only username should be updated
-                                    String DML = "UPDATE EBOOKSSTORE_USERS SET username=?,role=? WHERE ID=?";
-                                    pstmnt = connection.prepareStatement(DML);
-                                    pstmnt.setString(1, username);
-                                    pstmnt.setString(2, role);
-                                    pstmnt.setInt(3, ID);
-                                }else{
-                                    String DML = "UPDATE EBOOKSSTORE_USERS SET username=?, password=?,role=? WHERE ID=?";
-                                    pstmnt = connection.prepareStatement(DML);
-                                    pstmnt.setString(1, username);
-                                    pstmnt.setString(2, user_password);
-                                    pstmnt.setString(3, role);
-                                    pstmnt.setInt(4, ID);
-                                }
-                                boolean execute = pstmnt.execute();
-                            }
-                        }else{ // update one or more roles for one or more users
-                            for(String s : selectedCheckboxes){
-                                // realize update of all selected rows
-                                int ID = Integer.parseInt(s);
-                                String DML = "UPDATE EBOOKSSTORE_USERS SET role=? WHERE ID=?";
+                    // if both username and password are "" do nothing
+                    if(!(("".equals(username)) && ("".equals(user_password)))){
+                        // operate updates for all selected rows
+                        for(String s : selectedCheckboxes){
+                            // realize update of all selected rows
+                            String ssn = s;
+                            if("".equals(username)){ // only password/s should be updated
+                                String DML = "UPDATE EBOOKS.USERS SET password=?,role=? WHERE SSN=?";
                                 pstmnt = connection.prepareStatement(DML);
-                                pstmnt.setString(1, role);
-                                pstmnt.setInt(2, ID);
-                                boolean execute = pstmnt.execute();
-                            }                    
+                                pstmnt.setString(1, user_password);
+                                pstmnt.setString(2, role);
+                                pstmnt.setString(3, ssn);
+                            }
+                            else if("".equals(user_password)){// only username should be updated
+                                String DML = "UPDATE EBOOKS.USERS SET name=?,role=? WHERE SSN=?";
+                                pstmnt = connection.prepareStatement(DML);
+                                pstmnt.setString(1, username);
+                                pstmnt.setString(2, role);
+                                pstmnt.setString(3, ssn);
+                            }else{
+                                String DML = "UPDATE EBOOKS.USERS SET name=?, password=?,role=? WHERE SSN=?";
+                                pstmnt = connection.prepareStatement(DML);
+                                pstmnt.setString(1, username);
+                                pstmnt.setString(2, user_password);
+                                pstmnt.setString(3, role);
+                                pstmnt.setString(4, ssn);
+                            }
+                            boolean execute = pstmnt.execute();
                         }
+                    }else{ // update one or more roles for one or more users
+                        for(String s : selectedCheckboxes){
+                            // realize update of all selected rows
+                            String ssn = s;
+                            String DML = "UPDATE EBOOKS.USERS SET role=? WHERE SSN=?";
+                            pstmnt = connection.prepareStatement(DML);
+                            pstmnt.setString(1, role);
+                            pstmnt.setString(2, ssn);
+                            boolean execute = pstmnt.execute();
+                        }                    
                     }
                 }
                 catch (ClassNotFoundException | SQLException ex)
@@ -215,7 +184,7 @@ public class eBooksStoreAdminUsersServlet extends HttpServlet {
                         {
                             resultSet.close();
                         }
-                        catch (Exception ex){Logger.getLogger(eBooksStoreAdminUsersServlet.class.getName()).log(Level.SEVERE, null, ex);}
+                        catch (SQLException ex){Logger.getLogger(eBooksStoreAdminUsersServlet.class.getName()).log(Level.SEVERE, null, ex);}
                     }
                     if (pstmnt != null)
                     {
@@ -223,7 +192,7 @@ public class eBooksStoreAdminUsersServlet extends HttpServlet {
                         {
                             pstmnt.close();
                         }
-                        catch (Exception ex){Logger.getLogger(eBooksStoreAdminUsersServlet.class.getName()).log(Level.SEVERE, null, ex);}
+                        catch (SQLException ex){Logger.getLogger(eBooksStoreAdminUsersServlet.class.getName()).log(Level.SEVERE, null, ex);}
                     }	
                     if (connection != null)
                     {
@@ -231,7 +200,7 @@ public class eBooksStoreAdminUsersServlet extends HttpServlet {
                         {
                             connection.close();
                         }
-                        catch (Exception ex){Logger.getLogger(eBooksStoreAdminUsersServlet.class.getName()).log(Level.SEVERE, null, ex);}
+                        catch (SQLException ex){Logger.getLogger(eBooksStoreAdminUsersServlet.class.getName()).log(Level.SEVERE, null, ex);}
                     }
                     // redirect page to its JSP as view
                     request.getRequestDispatcher("./eBooksStoreAdminUsersPage.jsp").forward(request, response);
@@ -244,7 +213,6 @@ public class eBooksStoreAdminUsersServlet extends HttpServlet {
                 Connection connection = null;
                 try
                 {
- 
                     //check driver and create connection
                     Class driverClass = Class.forName(driver);
                     connection = DriverManager.getConnection(url, user, password);
@@ -254,10 +222,10 @@ public class eBooksStoreAdminUsersServlet extends HttpServlet {
                     connection.setAutoCommit(false);
                     for(String s : selectedCheckboxes){
                         // realize delete of all selected rows
-                        int ID = Integer.parseInt(s);
-                        String DML = "DELETE FROM EBOOKSSTORE_USERS WHERE ID=?";
+                        String ssn = s;
+                        String DML = "DELETE FROM EBOOKS.USERS WHERE SSN=?";
                         pstmnt = connection.prepareStatement(DML);
-                        pstmnt.setInt(1, ID);
+                        pstmnt.setString(1, ssn);
                         pstmnt.execute();
                     }
                     connection.commit();
@@ -282,7 +250,7 @@ public class eBooksStoreAdminUsersServlet extends HttpServlet {
                         {
                             resultSet.close();
                         }
-                        catch (Exception ex){
+                        catch (SQLException ex){
                             Logger.getLogger(eBooksStoreAdminUsersServlet.class.getName()).log(Level.SEVERE, null, ex);
                         }
                     }
@@ -292,7 +260,7 @@ public class eBooksStoreAdminUsersServlet extends HttpServlet {
                         {
                             pstmnt.close();
                         }
-                        catch (Exception ex){
+                        catch (SQLException ex){
                             Logger.getLogger(eBooksStoreAdminUsersServlet.class.getName()).log(Level.SEVERE, null, ex);
                         }
                     }
@@ -302,7 +270,7 @@ public class eBooksStoreAdminUsersServlet extends HttpServlet {
                         {
                             pstmnt.close();
                         }
-                        catch (Exception ex){
+                        catch (SQLException ex){
                             Logger.getLogger(eBooksStoreAdminUsersServlet.class.getName()).log(Level.SEVERE, null, ex);
                         }
                     }
@@ -311,7 +279,7 @@ public class eBooksStoreAdminUsersServlet extends HttpServlet {
                         {
                             connection.setAutoCommit(true);
                         }
-                        catch (Exception ex){                          
+                        catch (SQLException ex){                          
                             Logger.getLogger(eBooksStoreAdminUsersServlet.class.getName()).log(Level.SEVERE, null, ex);
                         }
                         finally{

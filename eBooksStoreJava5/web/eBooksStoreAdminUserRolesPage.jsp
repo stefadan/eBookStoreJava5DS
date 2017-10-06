@@ -21,7 +21,7 @@
                 <c:when test="${validUser == true}">   
                     <%-- Build the table containing actual user roles and their roles in a master-detail view--%>
                     <%-- include menu --%>
-                    <%@ include file=".\\utils\\eBooksStoreMenu.jspf" %>
+                    <%@ include file="./utils/eBooksStoreMenu.jsp" %>
                     <%-- Master view --%>
                         <form action="${pageContext.request.contextPath}/eBooksStoreAdminUserRolesServlet" method="POST">
                         <sql:setDataSource 
@@ -31,7 +31,7 @@
                         user="test"  
                         password="test"/>
                         <sql:query dataSource="${snapshot}" var="result">
-                            SELECT ROLE from EBOOKSSTORE_USER_ROLES ORDER BY ROLE ASC 
+                            SELECT ROLE from EBOOKS.ROLES ORDER BY ROLE ASC 
                         </sql:query>
                         <table border="1" width="100%">
                             <tr>

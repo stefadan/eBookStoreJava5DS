@@ -20,10 +20,10 @@
                 <c:set var="validUser" value="false" scope="session"></c:set>
                 <c:set var="actualUser" value="" scope="session"></c:set>  
                 <c:set var="actualUserRole" value=""scope="session" ></c:set>
-                <c:redirect url="./index.jsp"></c:redirect> 
+                <c:redirect url="./Index.jsp"></c:redirect> 
             </c:when>
             <c:otherwise> 
-                <c:redirect url="./index.jsp"></c:redirect>
+                <c:redirect url="./Index.jsp"></c:redirect>
             </c:otherwise>
         </c:choose>
     </body>

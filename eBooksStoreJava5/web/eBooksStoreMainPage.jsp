@@ -15,10 +15,9 @@
         <link rel="stylesheet" type="text/css" href=".\\css\\ebookstore.css">
     </head>
     <body>   
-        <c:out value="In pagina main!"></c:out>
         <c:choose>
             <c:when test="${validUser == true}">
-                <%@ include file=".\\utils\\eBooksStoreMenu.jspf" %>
+                <%@ include file="./utils/eBooksStoreMenu.jsp" %>
             </c:when>
             <c:otherwise>
                 <c:redirect url="./index.jsp"></c:redirect>

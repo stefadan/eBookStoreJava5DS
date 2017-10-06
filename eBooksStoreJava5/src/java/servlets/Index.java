@@ -67,7 +67,8 @@ public class Index extends HttpServlet {
                 // save as actualUser variable the username
                 request.getSession().setAttribute("actualUser", u);
                 // save as actualUserRole its role
-                request.getSession().setAttribute("actualUserRole", resultSet.getString("ROLE"));
+                String role = resultSet.getString("ROLE");
+                request.getSession().setAttribute("actualUserRole", role);
                 // create a variable to keep the authenticated user
                 request.getSession().setAttribute("validUser", true);
                 // delegate to JSP
@@ -78,7 +79,7 @@ public class Index extends HttpServlet {
                 // set validation attribute to false be sure security will not be broken
                 request.getSession().setAttribute("validUser", false);
                 // There is no user recorded with these username and password so we'll stay in this page
-                request.getRequestDispatcher("./index.jsp").forward(request, response);
+                request.getRequestDispatcher("./Index.jsp").forward(request, response);
             }
         } 
         catch (ClassNotFoundException | SQLException ex)

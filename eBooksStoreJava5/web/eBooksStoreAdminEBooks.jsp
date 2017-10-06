@@ -14,11 +14,8 @@
     </head>
     <body>
         <h1>Manage the books from Electronic Books Store</h1>
-        
         <form action="${pageContext.request.contextPath}/eBooksStoreAdminEBooks">
-        
             <input type="submit" class="ebooksstorebutton" name="admin_ebooks_insert" value="Insert">
-        
         </form>
     </body>
 </html>
