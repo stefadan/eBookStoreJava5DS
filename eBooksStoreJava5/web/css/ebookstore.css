@@ -133,6 +133,9 @@ input[type=text] {
 .inputlarge[type=text] {
     width: 120px;
 }
+.inputxllarge[type=text] {
+    width: 120px;
+}
 input[type=datetime] {
     width: 120px;
 }

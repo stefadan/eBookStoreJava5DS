@@ -20,6 +20,38 @@
         <servlet-name>eBooksStoreMainServlet</servlet-name>
         <servlet-class>servlets.eBooksStoreMainServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>eBooksStoreAdminPublishersServlet</servlet-name>
+        <servlet-class>servlets.eBooksStoreAdminPublishersServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>eBooksStoreAdminGenresServlet</servlet-name>
+        <servlet-class>servlets.eBooksStoreAdminGenresServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>eBooksStoreAdminBookTypeServlet</servlet-name>
+        <servlet-class>servlets.eBooksStoreAdminBookTypeServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>eBooksStoreAdminPaperQualityServlet</servlet-name>
+        <servlet-class>servlets.eBooksStoreAdminPaperQualityServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>eBooksStoreAdminBookAuthorServlet</servlet-name>
+        <servlet-class>servlets.eBooksStoreAdminBookAuthorServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>eBooksStoreAdminRatingServlet</servlet-name>
+        <servlet-class>servlets.eBooksStoreAdminRatingServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>eBookStoreAdminEBooksServlet</servlet-name>
+        <servlet-class>servlets.eBookStoreAdminEBooksServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>eBookStoreUserOrderServlet</servlet-name>
+        <servlet-class>servlets.eBookStoreUserOrderServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Index</servlet-name>
         <url-pattern>/Index</url-pattern>
@@ -39,6 +71,38 @@
     <servlet-mapping>
         <servlet-name>eBooksStoreMainServlet</servlet-name>
         <url-pattern>/eBooksStoreMainServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>eBooksStoreAdminPublishersServlet</servlet-name>
+        <url-pattern>/eBooksStoreAdminPublishersServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>eBooksStoreAdminGenresServlet</servlet-name>
+        <url-pattern>/eBooksStoreAdminGenresServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>eBooksStoreAdminBookTypeServlet</servlet-name>
+        <url-pattern>/eBooksStoreAdminBookTypeServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>eBooksStoreAdminPaperQualityServlet</servlet-name>
+        <url-pattern>/eBooksStoreAdminPaperQualityServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>eBooksStoreAdminBookAuthorServlet</servlet-name>
+        <url-pattern>/eBooksStoreAdminBookAuthorServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>eBooksStoreAdminRatingServlet</servlet-name>
+        <url-pattern>/eBooksStoreAdminRatingServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>eBookStoreAdminEBooksServlet</servlet-name>
+        <url-pattern>/eBookStoreAdminEBooksServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>eBookStoreUserOrderServlet</servlet-name>
+        <url-pattern>/eBookStoreUserOrderServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

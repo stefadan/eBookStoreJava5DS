@@ -7,6 +7,18 @@ drop table EBOOKS.BOOK_PAPER_QUALITIES;
 drop table EBOOKS.RATINGS;
 drop table EBOOKS.BOOK_GENRES;
 drop table EBOOKS.BOOK_AUTHOR;
+drop table EBOOKS.EBOOK_ORDERS;
+
+create table EBOOKS.EBOOK_ORDERS
+( id integer primary key,
+id_ISBN varchar(50),
+id_ssn varchar(13),
+copies integer,
+order_date date
+--,FOREIGN KEY(id_isbn) REFERENCES EBOOKS.EBOOKS(isbn)
+--,FOREIGN KEY(id_ssn) REFERENCES EBOOKS.USERS(ssn)
+);
+
 
 create table EBOOKS.BOOK_TYPES(
 id  integer primary key,
@@ -77,7 +89,11 @@ ID_ISBN varchar(50)
 --FOREIGN KEY(ID_SSN) REFERENCES USERS(SSN),
 --FOREIGN KEY(ID_ISBN) REFERENCES EBOOKS(ISBN)
 );
-
+------------------------------------------------------
+insert into EBOOKS.EBOOK_ORDERS
+	(id, id_isbn, id_ssn, copies, order_date)
+values 
+	(1, '978-606-40-0114-6', '2801010121111', 1, CURRENT_DATE);
 ------------------------------------------------------
 insert into EBOOKS.BOOK_TYPES(id, type)
 values (1, 'EBOOKS');
@@ -297,4 +313,17 @@ select count(1), 'RATINGS' from EBOOKS.RATINGS
 union
 select count(1), 'BOOK_GENRES' from EBOOKS.BOOK_GENRES
 union
-select count(1), 'BOOK_AUTHOR' from EBOOKS.BOOK_AUTHOR;
+select count(1), 'BOOK_AUTHOR' from EBOOKS.BOOK_AUTHOR
+union
+select count(1), 'EBOOK_ORDERS' from EBOOKS.EBOOK_ORDERS;
+
+----------------------------------------------
+--pentru search
+select a.denumire, a.pret, a.nr_exemplare, b.id, c.name, d.first_name, d.family_name
+from ebooks a, ebooks_authors b, publishers c, book_author d
+where a.isbn=b.id_isbn
+and a.id_publisher = c.id
+and b.id_ssn=d.ssn
+and (upper(d.family_name) like '%MOYES%' or upper(d.first_name) like '%MOYES%' or upper(a.denumire) like '%MOYES%' or upper(c.name) like '%MOYES%');
+
+

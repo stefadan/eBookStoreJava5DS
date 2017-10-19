@@ -1,7 +1,7 @@
 <%-- 
-    Document   : eBooksStoreAdminUserRolesPage.JSP
-    Author     : gheorgheaurelpacurar   
-    Copyright  : gheorgheaurelpacurar
+    Document   : eBooksStoreAdminBookAuthorPage
+    Created on : Oct 8, 2017, 2:30:25 PM
+    Author     : iulica
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -12,7 +12,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Electronic Books Store Manage User Roles Page</title>
+        <title>Electronic Books Store Manage Authors Page</title>
         <link rel="stylesheet" type="text/css" href=".\\css\\ebookstore.css">
     </head>
     <body>
@@ -23,7 +23,7 @@
                     <%-- include menu --%>
                     <%@ include file="./utils/eBooksStoreMenu.jsp" %>
                     <%-- Master view --%>
-                        <form action="${pageContext.request.contextPath}/eBooksStoreAdminUserRolesServlet" method="POST">
+                        <form action="${pageContext.request.contextPath}/eBooksStoreAdminBookAuthorServlet" method="POST">
                         <sql:setDataSource 
                         var="snapshot" 
                         driver="org.apache.derby.jdbc.ClientDriver40"
@@ -31,17 +31,21 @@
                         user="ebooks"  
                         password="ebooks"/>
                         <sql:query dataSource="${snapshot}" var="result">
-                            SELECT ROLE from EBOOKS.ROLES ORDER BY ROLE ASC 
+                            select SSN, FIRST_NAME, FAMILY_NAME from EBOOKS.BOOK_AUTHOR ORDER BY FIRST_NAME ASC 
                         </sql:query>
                         <table border="1" width="100%">
                             <tr>
                             <td class="thc">select</td>    
-                            <td class="thc">ROLE</td>
+                            <td class="thc">CNP</td>
+                            <td class="thc">First name</td>
+                            <td class="thc">Last name</td>
                             </tr>
                             <c:forEach var="row" varStatus="loop" items="${result.rows}">
                             <tr>
-                                <td class="tdc"><input type="checkbox" name="admin_user_roles_checkbox" value="${row.role}"></td>
-                                <td class="tdc"><c:out value="${row.role}"/></td>
+                                <td class="tdc"><input type="checkbox" name="admin_author_checkbox" value="${row.ssn}"></td>
+                                <td class="tdc"><c:out value="${row.ssn}"/></td>
+                                <td class="tdc"><c:out value="${row.first_name}"/></td>
+                                <td class="tdc"><c:out value="${row.family_name}"/></td>
                             </tr>
                             </c:forEach>
                         </table>
@@ -50,16 +54,24 @@
                             <tr><td>
                             <table>
                                 <tr>
-                                    <td> ROLE </td>
-                                    <td> <input type="text" name="admin_user_roles_role"></input></td>
+                                    <td> CNP </td>
+                                    <td> <input class = "inputlarge" maxlength="13" size="13" type="text" name="admin_author_cnp"></input></td>
+                                </tr>
+                                <tr>
+                                    <td> First name </td>
+                                    <td> <input class = "inputlarge" maxlength="50" size="50" type="text" name="admin_author_fname"></input></td>
+                                </tr>
+                                <tr>
+                                    <td> Last name </td>
+                                    <td> <input class = "inputlarge" maxlength="50" size="50" type="text" name="admin_author_lname"></input></td>
                                 </tr>
                             </table>
                             <%-- buttons --%>
                             <table>
-                                    <tr><td class="tdc"><input type="submit" class="ebooksstorebutton" name="admin_user_roles_insert" value="Insert"></td> 
-                                        <td class="tdc"><input type="submit" class="ebooksstorebutton" name="admin_user_roles_update" value="Update"></td>
-                                        <td class="tdc"><input type="submit" class="ebooksstorebutton" name="admin_user_roles_delete" value="Delete"></td> 
-                                        <td class="tdc"><input type="submit" class="ebooksstorebutton" name="admin_user_roles_cancel" value="Cancel"></td>
+                                    <tr><td class="tdc"><input type="submit" class="ebooksstorebutton" name="admin_author_insert" value="Insert"></td> 
+                                        <td class="tdc"><input type="submit" class="ebooksstorebutton" name="admin_author_update" value="Update"></td>
+                                        <td class="tdc"><input type="submit" class="ebooksstorebutton" name="admin_author_delete" value="Delete"></td> 
+                                        <td class="tdc"><input type="submit" class="ebooksstorebutton" name="admin_author_cancel" value="Cancel"></td>
                                     </tr>     
                             </table>
                             </td></tr>

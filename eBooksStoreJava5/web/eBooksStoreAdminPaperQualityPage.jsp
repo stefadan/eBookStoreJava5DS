@@ -1,7 +1,7 @@
 <%-- 
-    Document   : eBooksStoreAdminUserRolesPage.JSP
-    Author     : gheorgheaurelpacurar   
-    Copyright  : gheorgheaurelpacurar
+    Document   : eBooksStoreAdminPaperQualityPage
+    Created on : Oct 8, 2017, 1:45:48 PM
+    Author     : iulica
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -12,7 +12,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Electronic Books Store Manage User Roles Page</title>
+        <title>Electronic Books Store Manage Paper Quality Page</title>
         <link rel="stylesheet" type="text/css" href=".\\css\\ebookstore.css">
     </head>
     <body>
@@ -23,7 +23,7 @@
                     <%-- include menu --%>
                     <%@ include file="./utils/eBooksStoreMenu.jsp" %>
                     <%-- Master view --%>
-                        <form action="${pageContext.request.contextPath}/eBooksStoreAdminUserRolesServlet" method="POST">
+                        <form action="${pageContext.request.contextPath}/eBooksStoreAdminPaperQualityServlet" method="POST">
                         <sql:setDataSource 
                         var="snapshot" 
                         driver="org.apache.derby.jdbc.ClientDriver40"
@@ -31,17 +31,17 @@
                         user="ebooks"  
                         password="ebooks"/>
                         <sql:query dataSource="${snapshot}" var="result">
-                            SELECT ROLE from EBOOKS.ROLES ORDER BY ROLE ASC 
+                            SELECT ID, QUALITY from EBOOKS.BOOK_PAPER_QUALITIES ORDER BY QUALITY ASC 
                         </sql:query>
                         <table border="1" width="100%">
                             <tr>
                             <td class="thc">select</td>    
-                            <td class="thc">ROLE</td>
+                            <td class="thc">Paper Quality</td>
                             </tr>
                             <c:forEach var="row" varStatus="loop" items="${result.rows}">
                             <tr>
-                                <td class="tdc"><input type="checkbox" name="admin_user_roles_checkbox" value="${row.role}"></td>
-                                <td class="tdc"><c:out value="${row.role}"/></td>
+                                <td class="tdc"><input type="checkbox" name="admin_paper_quality_checkbox" value="${row.id}"></td>
+                                <td class="tdc"><c:out value="${row.quality}"/></td>
                             </tr>
                             </c:forEach>
                         </table>
@@ -50,16 +50,16 @@
                             <tr><td>
                             <table>
                                 <tr>
-                                    <td> ROLE </td>
-                                    <td> <input type="text" name="admin_user_roles_role"></input></td>
+                                    <td> PAPER QUALITY </td>
+                                    <td> <input maxlength="50" size="50" type="text" name="admin_paper_quality_role"></input></td>
                                 </tr>
                             </table>
                             <%-- buttons --%>
                             <table>
-                                    <tr><td class="tdc"><input type="submit" class="ebooksstorebutton" name="admin_user_roles_insert" value="Insert"></td> 
-                                        <td class="tdc"><input type="submit" class="ebooksstorebutton" name="admin_user_roles_update" value="Update"></td>
-                                        <td class="tdc"><input type="submit" class="ebooksstorebutton" name="admin_user_roles_delete" value="Delete"></td> 
-                                        <td class="tdc"><input type="submit" class="ebooksstorebutton" name="admin_user_roles_cancel" value="Cancel"></td>
+                                    <tr><td class="tdc"><input type="submit" class="ebooksstorebutton" name="admin_paper_quality_insert" value="Insert"></td> 
+                                        <td class="tdc"><input type="submit" class="ebooksstorebutton" name="admin_paper_quality_update" value="Update"></td>
+                                        <td class="tdc"><input type="submit" class="ebooksstorebutton" name="admin_paper_quality_delete" value="Delete"></td> 
+                                        <td class="tdc"><input type="submit" class="ebooksstorebutton" name="admin_paper_quality_cancel" value="Cancel"></td>
                                     </tr>     
                             </table>
                             </td></tr>
