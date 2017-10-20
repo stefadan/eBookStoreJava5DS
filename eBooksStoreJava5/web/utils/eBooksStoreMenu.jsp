@@ -28,6 +28,7 @@
                                 <li><a href="./eBooksStoreAdminBookAuthorPage.jsp">Authors</a></li>
                                 <li><a href="./eBooksStoreAdminRatingPage.jsp">Rating</a></li>
                                 <li><a href="./eBooksStoreAdminEBooks.jsp">eBooks</a></li>
+                                <li><a href="./eBookStoreAdminPublisherTag.jsp">Publisher-Tag</a></li>
                             </c:when>
                         </c:choose>                              
                     </ul>
